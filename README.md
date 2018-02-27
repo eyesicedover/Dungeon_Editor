@@ -33,9 +33,37 @@ A project for the advanced database week of C#. Rules to follow.
   - EXPECTED INPUT: Rooms.GetAll()
   - EXPECTED OUTPUT: Empty List
 
+* Test Equals method override for Rooms
+  - EXPECTED INPUT: EntryWay in two Lists
+  - EXPECTED OUTPUT: None.
 
+* Test Equals method override for Items
+  - EXPECTED INPUT: Torch in two Lists
+  - EXPECTED OUTPUT: None.
 
+* Test Equals method override for NPCs
+  - EXPECTED INPUT: Orc in two Lists
+  - EXPECTED OUTPUT: None.
 
+* Test Equals method override for PCs
+  - EXPECTED INPUT: Crom in two Lists
+  - EXPECTED
+
+* Test Save() method for Rooms
+  - EXPECTED INPUT: EntryWay in two Lists
+  - EXPECTED OUTPUT: None.
+
+* Test Save() method for Items
+  - EXPECTED INPUT: Torch in two Lists
+  - EXPECTED OUTPUT: None.
+
+* Test Save() method for NPCs
+  - EXPECTED INPUT: Orc in two Lists
+  - EXPECTED OUTPUT: None.
+
+* Test Save() method for PCs
+  - EXPECTED INPUT: Crom in two Lists
+  - EXPECTED OUTPUT: None.
 
 * Test Save and other functions.
 

@@ -30,5 +30,31 @@ namespace Dungeon.Tests
       Assert.AreEqual(0, result);
     }
 
+    [TestMethod]
+    public void Equals_TrueForSameDescription_Item()
+    {
+      //Arrange, Act
+      Item firstItem = new Item("Torch");
+      Item secondItem = new Item("Torch");
+
+      //Assert
+      Assert.AreEqual(firstItem, secondItem);
+    }
+
+    [TestMethod]
+    public void Save_ItemSavesToDatabase_ItemList()
+    {
+      //Arrange
+      Item testItem = new Item("Torch");
+      testItem.Save();
+
+      //Act
+      List<Item> result = Item.GetAll();
+      List<Item> testList = new List<Item>{testItem};
+
+      //Assert
+      CollectionAssert.AreEqual(testList, result);
+    }
+
   }
 }

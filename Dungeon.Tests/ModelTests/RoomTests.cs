@@ -30,5 +30,31 @@ namespace Dungeon.Tests
       Assert.AreEqual(0, result);
     }
 
+    [TestMethod]
+    public void Equals_TrueForSameDescription_Room()
+    {
+      //Arrange, Act
+      Room firstRoom = new Room("Entryway");
+      Room secondRoom = new Room("Entryway");
+
+      //Assert
+      Assert.AreEqual(firstRoom, secondRoom);
+    }
+
+    [TestMethod]
+    public void Save_RoomSavesToDatabase_RoomList()
+    {
+      //Arrange
+      Room testRoom = new Room("Entryway");
+      testRoom.Save();
+
+      //Act
+      List<Room> result = Room.GetAll();
+      List<Room> testList = new List<Room>{testRoom};
+
+      //Assert
+      CollectionAssert.AreEqual(testList, result);
+    }
+
   }
 }

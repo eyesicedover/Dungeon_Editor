@@ -30,5 +30,31 @@ namespace Dungeon.Tests
       Assert.AreEqual(0, result);
     }
 
+    [TestMethod]
+    public void Equals_TrueForSameDescription_PC()
+    {
+      //Arrange, Act
+      PC firstPC = new PC("Crom");
+      PC secondPC = new PC("Crom");
+
+      //Assert
+      Assert.AreEqual(firstPC, secondPC);
+    }
+
+    [TestMethod]
+    public void Save_PCSavesToDatabase_PCList()
+    {
+      //Arrange
+      PC testPC = new PC("Crom");
+      testPC.Save();
+
+      //Act
+      List<PC> result = PC.GetAll();
+      List<PC> testList = new List<PC>{testPC};
+
+      //Assert
+      CollectionAssert.AreEqual(testList, result);
+    }
+
   }
 }
