@@ -19,5 +19,16 @@ namespace Dungeon.Tests
       PC.DeleteAll();
       // PC.DeleteAll();
     }
+
+    [TestMethod]
+    public void GetAll_DatabaseEmptyAtFirst_0()
+    {
+      //Arrange, Act
+      int result = PC.GetAll().Count;
+
+      //Assert
+      Assert.AreEqual(0, result);
+    }
+
   }
 }

@@ -53,6 +53,30 @@ namespace Dungeon.Models
           return "this is a string from the model";
         }
 
+        public static List<Item> GetAll()
+        {
+            List<Item> allItems = new List<Item> {};
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT * FROM items;";
+            var rdr = cmd.ExecuteReader() as MySqlDataReader;
+            while(rdr.Read())
+            {
+              int itemId = rdr.GetInt32(0);
+              string itemDescription = rdr.GetString(1);
+              Item newItem = new Item(itemDescription, itemId);
+              allItems.Add(newItem);
+            }
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+            return allItems;
+        }
+
+
         public static void DeleteAll()
         {
             MySqlConnection conn = DB.Connection();

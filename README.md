@@ -13,7 +13,29 @@ A project for the advanced database week of C#. Rules to follow.
 
 * Load a database
 
+* Create Objects for Room, Item, NPCs, PCs
+
 * Connect to database
+
+* Create GetAll() method for Room
+  - EXPECTED INPUT: Rooms.GetAll()
+  - EXPECTED OUTPUT: Empty List
+
+* Create GetAll() method for Item
+  - EXPECTED INPUT: Rooms.GetAll()
+  - EXPECTED OUTPUT: Empty List
+
+* Create GetAll() method for NPC
+  - EXPECTED INPUT: Rooms.GetAll()
+  - EXPECTED OUTPUT: Empty List
+
+* Create GetAll() method for PC
+  - EXPECTED INPUT: Rooms.GetAll()
+  - EXPECTED OUTPUT: Empty List
+
+
+
+
 
 * Test Save and other functions.
 

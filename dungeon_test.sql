@@ -1,78 +1,212 @@
-CREATE TABLE `Rooms` (
-	`id` bigint NOT NULL AUTO_INCREMENT,
-	`Name` varchar NOT NULL,
-	`Short Description` varchar NOT NULL,
-	`Full Description` varchar NOT NULL,
-	`Light` bool NOT NULL,
-	`Commands` varchar NOT NULL,
-	PRIMARY KEY (`id`)
-);
+-- phpMyAdmin SQL Dump
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost:8889
+-- Generation Time: Feb 27, 2018 at 08:18 PM
+-- Server version: 5.6.35
+-- PHP Version: 7.0.15
 
-CREATE TABLE `Items` (
-	`` bigint NOT NULL,
-	`id` bigint NOT NULL AUTO_INCREMENT,
-	`Name` varchar NOT NULL AUTO_INCREMENT,
-	`Type` varchar NOT NULL,
-	`Special` varchar NOT NULL,
-	`Magic` bool NOT NULL,
-	PRIMARY KEY (`id`)
-);
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
-CREATE TABLE `PCs` (
-	`id` bigint NOT NULL AUTO_INCREMENT,
-	`Name` varchar NOT NULL,
-	`Type` varchar NOT NULL,
-	`HP` int NOT NULL AUTO_INCREMENT,
-	`AC` int NOT NULL,
-	`Damage` int NOT NULL,
-	`LVL` int NOT NULL,
-	`EXP` int NOT NULL,
-	PRIMARY KEY (`id`)
-);
 
-CREATE TABLE `NPCs` (
-	`id` bigint NOT NULL AUTO_INCREMENT,
-	`Name` varchar NOT NULL,
-	`Type` varchar NOT NULL,
-	`HP` int NOT NULL AUTO_INCREMENT,
-	`AC` int NOT NULL,
-	`Damage` int NOT NULL,
-	`LVL` int NOT NULL,
-	PRIMARY KEY (`id`)
-);
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
-CREATE TABLE `Inventory` (
-	`Items` bigint NOT NULL,
-	`PCs` bigint NOT NULL
-);
+--
+-- Database: `dungeon_test`
+--
+CREATE DATABASE IF NOT EXISTS `dungeon_test` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `dungeon_test`;
 
-CREATE TABLE `Loot` (
-	`Items` bigint NOT NULL,
-	`NPCs` bigint NOT NULL
-);
+-- --------------------------------------------------------
 
-CREATE TABLE `Contents` (
-	`RoomId` bigint NOT NULL,
-	`NPCs` bigint NOT NULL,
-	`PCs` bigint NOT NULL,
-	`Items` bigint NOT NULL
-);
+--
+-- Table structure for table `contents`
+--
 
-ALTER TABLE `Rooms` ADD CONSTRAINT `Rooms_fk0` FOREIGN KEY (`Commands`) REFERENCES `Contents`(``);
+CREATE TABLE `contents` (
+  `id` int(11) NOT NULL,
+  `rooms` int(11) NOT NULL,
+  `npcs` int(11) NOT NULL,
+  `pcs` int(11) NOT NULL,
+  `items` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-ALTER TABLE `Inventory` ADD CONSTRAINT `Inventory_fk0` FOREIGN KEY (`Items`) REFERENCES `Items`(``);
+-- --------------------------------------------------------
 
-ALTER TABLE `Inventory` ADD CONSTRAINT `Inventory_fk1` FOREIGN KEY (`PCs`) REFERENCES `PCs`(`id`);
+--
+-- Table structure for table `inventory`
+--
 
-ALTER TABLE `Loot` ADD CONSTRAINT `Loot_fk0` FOREIGN KEY (`Items`) REFERENCES `Items`(`id`);
+CREATE TABLE `inventory` (
+  `id` int(11) NOT NULL,
+  `items` int(11) NOT NULL,
+  `pcs` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-ALTER TABLE `Loot` ADD CONSTRAINT `Loot_fk1` FOREIGN KEY (`NPCs`) REFERENCES `NPCs`(`id`);
+-- --------------------------------------------------------
 
-ALTER TABLE `Contents` ADD CONSTRAINT `Contents_fk0` FOREIGN KEY (`RoomId`) REFERENCES `Rooms`(`id`);
+--
+-- Table structure for table `items`
+--
 
-ALTER TABLE `Contents` ADD CONSTRAINT `Contents_fk1` FOREIGN KEY (`NPCs`) REFERENCES `NPCs`(`id`);
+CREATE TABLE `items` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `special` varchar(255) NOT NULL,
+  `magic` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-ALTER TABLE `Contents` ADD CONSTRAINT `Contents_fk2` FOREIGN KEY (`PCs`) REFERENCES `PCs`(`id`);
+-- --------------------------------------------------------
 
-ALTER TABLE `Contents` ADD CONSTRAINT `Contents_fk3` FOREIGN KEY (`Items`) REFERENCES `Items`(``);
+--
+-- Table structure for table `loot`
+--
 
+CREATE TABLE `loot` (
+  `id` int(11) NOT NULL,
+  `items` int(11) NOT NULL,
+  `npcs` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `npcs`
+--
+
+CREATE TABLE `npcs` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `hp` int(11) NOT NULL,
+  `ac` int(11) NOT NULL,
+  `damage` int(11) NOT NULL,
+  `lvl` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pcs`
+--
+
+CREATE TABLE `pcs` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `hp` int(11) NOT NULL,
+  `ac` int(11) NOT NULL,
+  `damage` int(11) NOT NULL,
+  `lvl` int(11) NOT NULL,
+  `exp` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rooms`
+--
+
+CREATE TABLE `rooms` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `short_description` varchar(255) NOT NULL,
+  `full_description` varchar(255) NOT NULL,
+  `light` tinyint(1) NOT NULL,
+  `commands` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `contents`
+--
+ALTER TABLE `contents`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `inventory`
+--
+ALTER TABLE `inventory`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `items`
+--
+ALTER TABLE `items`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `loot`
+--
+ALTER TABLE `loot`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `npcs`
+--
+ALTER TABLE `npcs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pcs`
+--
+ALTER TABLE `pcs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `contents`
+--
+ALTER TABLE `contents`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `inventory`
+--
+ALTER TABLE `inventory`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `items`
+--
+ALTER TABLE `items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `loot`
+--
+ALTER TABLE `loot`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `npcs`
+--
+ALTER TABLE `npcs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `pcs`
+--
+ALTER TABLE `pcs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `rooms`
+--
+ALTER TABLE `rooms`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -29,7 +29,6 @@ namespace Dungeon.Models
              NPC newNPC = (NPC) otherNPC;
              bool idEquality = this.GetId() == newNPC.GetId();
              bool nameEquality = this.GetName() == newNPC.GetName();
-             // We no longer compare Items' categoryIds in a categoryEquality bool here.
              return (idEquality && nameEquality);
            }
         }
@@ -51,6 +50,29 @@ namespace Dungeon.Models
         public static string GetString()
         {
             return "this is a string from the model";
+        }
+
+        public static List<NPC> GetAll()
+        {
+            List<NPC> allNPCs = new List<NPC> {};
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT * FROM npcs;";
+            var rdr = cmd.ExecuteReader() as MySqlDataReader;
+            while(rdr.Read())
+            {
+              int npcId = rdr.GetInt32(0);
+              string npcDescription = rdr.GetString(1);
+              NPC newNPC = new NPC(npcDescription, npcId);
+              allNPCs.Add(newNPC);
+            }
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+            return allNPCs;
         }
 
         public static void DeleteAll()

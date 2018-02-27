@@ -19,5 +19,16 @@ namespace Dungeon.Tests
       Room.DeleteAll();
       // Room.DeleteAll();
     }
+
+    [TestMethod]
+    public void GetAll_DatabaseEmptyAtFirst_0()
+    {
+      //Arrange, Act
+      int result = Room.GetAll().Count;
+
+      //Assert
+      Assert.AreEqual(0, result);
+    }
+
   }
 }

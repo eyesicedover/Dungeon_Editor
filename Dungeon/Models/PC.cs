@@ -29,7 +29,6 @@ namespace Dungeon.Models
              PC newPC = (PC) otherPC;
              bool idEquality = this.GetId() == newPC.GetId();
              bool nameEquality = this.GetName() == newPC.GetName();
-             // We no longer compare Items' categoryIds in a categoryEquality bool here.
              return (idEquality && nameEquality);
            }
         }
@@ -51,6 +50,29 @@ namespace Dungeon.Models
         public static string GetString()
         {
             return "this is a string from the model";
+        }
+
+        public static List<PC> GetAll()
+        {
+            List<PC> allPCs = new List<PC> {};
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT * FROM pcs;";
+            var rdr = cmd.ExecuteReader() as MySqlDataReader;
+            while(rdr.Read())
+            {
+              int pcId = rdr.GetInt32(0);
+              string pcDescription = rdr.GetString(1);
+              PC newPC = new PC(pcDescription, pcId);
+              allPCs.Add(newPC);
+            }
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+            return allPCs;
         }
 
         public static void DeleteAll()

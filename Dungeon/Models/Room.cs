@@ -18,7 +18,6 @@ namespace Dungeon.Models
         {
             _name = name;
             _id = id;
-           // RoomId is removed from the constructor
         }
 
         public override bool Equals(System.Object otherRoom)
@@ -32,7 +31,6 @@ namespace Dungeon.Models
              Room newRoom = (Room) otherRoom;
              bool idEquality = this.GetId() == newRoom.GetId();
              bool nameEquality = this.GetName() == newRoom.GetName();
-             // We no longer compare Items' RoomIds in a RoomEquality bool here.
              return (idEquality && nameEquality);
            }
         }
@@ -51,18 +49,41 @@ namespace Dungeon.Models
             return _id;
         }
 
-        public static void DeleteAll()
+        public static List<Room> GetAll()
         {
+            List<Room> allRooms = new List<Room> {};
             MySqlConnection conn = DB.Connection();
             conn.Open();
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"DELETE FROM rooms;";
-            cmd.ExecuteNonQuery();
+            cmd.CommandText = @"SELECT * FROM rooms;";
+            var rdr = cmd.ExecuteReader() as MySqlDataReader;
+            while(rdr.Read())
+            {
+              int roomId = rdr.GetInt32(0);
+              string roomDescription = rdr.GetString(1);
+              Room newRoom = new Room(roomDescription, roomId);
+              allRooms.Add(newRoom);
+            }
             conn.Close();
             if (conn != null)
             {
                 conn.Dispose();
             }
+            return allRooms;
+        }
+
+        public static void DeleteAll()
+        {
+          MySqlConnection conn = DB.Connection();
+          conn.Open();
+          var cmd = conn.CreateCommand() as MySqlCommand;
+          cmd.CommandText = @"DELETE FROM rooms;";
+          cmd.ExecuteNonQuery();
+          conn.Close();
+          if (conn != null)
+          {
+            conn.Dispose();
+          }
         }
 
     }
