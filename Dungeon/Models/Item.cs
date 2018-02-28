@@ -29,7 +29,7 @@ namespace Dungeon.Models
              Item newItem = (Item) otherItem;
              bool idEquality = this.GetId() == newItem.GetId();
              bool nameEquality = this.GetName() == newItem.GetName();
-             // We no longer compare Items' categoryIds in a categoryEquality bool here.
+
              return (idEquality && nameEquality);
            }
         }
@@ -89,8 +89,6 @@ namespace Dungeon.Models
             name.Value = this._name;
             cmd.Parameters.Add(name);
 
-            // Code to declare, set, and add values to a categoryId SQL parameters has also been removed.
-
             cmd.ExecuteNonQuery();
             _id = (int) cmd.LastInsertedId;
             conn.Close();
@@ -100,12 +98,88 @@ namespace Dungeon.Models
             }
         }
 
+        public static Item Find(int id)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT * FROM items WHERE id = (@searchId);";
+
+            MySqlParameter searchId = new MySqlParameter();
+            searchId.ParameterName = "@searchId";
+            searchId.Value = id;
+            cmd.Parameters.Add(searchId);
+
+            var rdr = cmd.ExecuteReader() as MySqlDataReader;
+            int itemId = 0;
+            string itemName = "";
+
+            while(rdr.Read())
+            {
+              itemId = rdr.GetInt32(0);
+              itemName = rdr.GetString(1);
+            }
+
+            Item newItem = new Item(itemName, itemId);
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+
+            return newItem;
+        }
+
+        public void DeleteFrom(string joinTable)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+
+            MySqlCommand cmd = new MySqlCommand("DELETE FROM @JoinTable WHERE itemId = @ItemId;", conn);
+            MySqlParameter itemIdParameter = new MySqlParameter();
+            itemIdParameter.ParameterName = "@ItemId";
+            itemIdParameter.Value = this.GetId();
+
+            MySqlParameter joinTableParameter = new MySqlParameter();
+            joinTableParameter.ParameterName = "@JoinTable";
+            joinTableParameter.Value = joinTable;
+
+            cmd.Parameters.Add(itemIdParameter);
+            cmd.ExecuteNonQuery();
+
+            if (conn != null)
+            {
+                conn.Close();
+            }
+
+        }
+
+        public void Delete()
+        {
+            // Delete Item entirely
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+
+            MySqlCommand cmd = new MySqlCommand("DELETE FROM items WHERE id = @ItemId; DELETE FROM contents WHERE items = @ItemId;", conn);
+            MySqlParameter itemIdParameter = new MySqlParameter();
+            itemIdParameter.ParameterName = "@ItemId";
+            itemIdParameter.Value = this.GetId();
+
+            cmd.Parameters.Add(itemIdParameter);
+            cmd.ExecuteNonQuery();
+
+            if (conn != null)
+            {
+                conn.Close();
+            }
+        }
+
         public static void DeleteAll()
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"DELETE FROM items;";
+            cmd.CommandText = @"DELETE FROM items; DELETE FROM contents";
             cmd.ExecuteNonQuery();
             conn.Close();
             if (conn != null)

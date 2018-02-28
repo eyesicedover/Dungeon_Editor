@@ -85,7 +85,7 @@ namespace Dungeon.Models
             name.Value = this._name;
             cmd.Parameters.Add(name);
 
-            // Code to declare, set, and add values to a categoryId SQL parameters has also been removed.
+            // Code to declare, set, and add values to a roomId SQL parameters has also been removed.
 
             cmd.ExecuteNonQuery();
             _id = (int) cmd.LastInsertedId;
@@ -96,12 +96,129 @@ namespace Dungeon.Models
             }
         }
 
+        public static Room Find(int id)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT * FROM rooms WHERE id = (@searchId);";
+
+            MySqlParameter searchId = new MySqlParameter();
+            searchId.ParameterName = "@searchId";
+            searchId.Value = id;
+            cmd.Parameters.Add(searchId);
+
+            var rdr = cmd.ExecuteReader() as MySqlDataReader;
+            int roomId = 0;
+            string roomName = "";
+            // We remove the line setting a itemRoomId value here.
+
+            while(rdr.Read())
+            {
+              roomId = rdr.GetInt32(0);
+              roomName = rdr.GetString(1);
+              // We no longer read the itemRoomId here, either.
+            }
+
+            // Constructor below no longer includes a itemRoomId parameter:
+            Room newRoom = new Room(roomName, roomId);
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+
+            return newRoom;
+        }
+
+        public void Delete()
+        // Delete's the room
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+
+            MySqlCommand cmd = new MySqlCommand("DELETE FROM rooms WHERE id = @RoomId; DELETE FROM contents WHERE room_id = @RoomId;", conn);
+            MySqlParameter roomIdParameter = new MySqlParameter();
+            roomIdParameter.ParameterName = "@RoomId";
+            roomIdParameter.Value = this.GetId();
+
+            cmd.Parameters.Add(roomIdParameter);
+            cmd.ExecuteNonQuery();
+
+            if (conn != null)
+            {
+                conn.Close();
+            }
+        }
+
+        public void AddItemToRoom(Item newItem)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"INSERT INTO contents (rooms, items) VALUES (@RoomId, @ItemId);";
+
+            MySqlParameter rooms = new MySqlParameter();
+            rooms.ParameterName = "@RoomId";
+            rooms.Value = _id;
+            cmd.Parameters.Add(rooms);
+
+            MySqlParameter items = new MySqlParameter();
+            items.ParameterName = "@ItemId";
+            items.Value = newItem.GetId();
+            cmd.Parameters.Add(items);
+
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        }
+
+        public List<Item> GetItems()
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+            // cmd.CommandText = @"SELECT items.* FROM rooms
+            //   JOIN contents ON (categories.id = categories_items.category_id)
+            //   JOIN items ON (categories_items.item_id = items.id)
+            //   WHERE categories.id = @CategoryId;";
+            cmd.CommandText = @"SELECT items.* FROM rooms
+              JOIN contents ON (rooms.id = contents.rooms)
+              JOIN items ON (contents.items = items.id)
+              WHERE rooms.id = @RoomId;";
+
+            MySqlParameter roomIdParameter = new MySqlParameter();
+            roomIdParameter.ParameterName = "@RoomId";
+            roomIdParameter.Value = _id;
+            cmd.Parameters.Add(roomIdParameter);
+
+            MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+            List<Item> items = new List<Item>{};
+
+            while(rdr.Read())
+            {
+                int itemId = rdr.GetInt32(0);
+                string itemName = rdr.GetString(1);
+                Item newItem = new Item(itemName, itemId);
+                items.Add(newItem);
+            }
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        return items;
+        }
+
         public static void DeleteAll()
         {
           MySqlConnection conn = DB.Connection();
           conn.Open();
           var cmd = conn.CreateCommand() as MySqlCommand;
-          cmd.CommandText = @"DELETE FROM rooms;";
+          cmd.CommandText = @"DELETE FROM rooms; DELETE FROM contents;";
           cmd.ExecuteNonQuery();
           conn.Close();
           if (conn != null)

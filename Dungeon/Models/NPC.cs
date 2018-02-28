@@ -99,6 +99,57 @@ namespace Dungeon.Models
             }
         }
 
+        public static NPC Find(int id)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT * FROM npcs WHERE id = (@searchId);";
+
+            MySqlParameter searchId = new MySqlParameter();
+            searchId.ParameterName = "@searchId";
+            searchId.Value = id;
+            cmd.Parameters.Add(searchId);
+
+            var rdr = cmd.ExecuteReader() as MySqlDataReader;
+            int npcId = 0;
+            string npcName = "";
+
+            while(rdr.Read())
+            {
+              npcId = rdr.GetInt32(0);
+              npcName = rdr.GetString(1);
+            }
+
+            NPC newNPC = new NPC(npcName, npcId);
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+
+            return newNPC;
+        }
+
+        public void Delete()
+        {
+            // Delete NPC entirely
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+
+            MySqlCommand cmd = new MySqlCommand("DELETE FROM npcs WHERE id = @NPCId; DELETE FROM loot WHERE npc_id = @NPCId;", conn);
+            MySqlParameter npcIdParameter = new MySqlParameter();
+            npcIdParameter.ParameterName = "@NPCId";
+            npcIdParameter.Value = this.GetId();
+
+            cmd.Parameters.Add(npcIdParameter);
+            cmd.ExecuteNonQuery();
+
+            if (conn != null)
+            {
+                conn.Close();
+            }
+        }
 
         public static void DeleteAll()
         {

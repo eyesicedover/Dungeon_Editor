@@ -65,6 +65,14 @@ A project for the advanced database week of C#. Rules to follow.
   - EXPECTED INPUT: Crom in two Lists
   - EXPECTED OUTPUT: None.
 
+* Test Find() method for Rooms
+  - EXPECTED INPUT: EntryWay
+  - EXPECTED OUTPUT: None.
+
+* Test AddItems() method for Items and Contents join table
+  - EXPECTED INPUT: EntryWay, Sword, Torch
+  - EXPECTED OUTPUT: None.
+
 * Test Save and other functions.
 
 * Build a feature to let users Create a Room and populate with:

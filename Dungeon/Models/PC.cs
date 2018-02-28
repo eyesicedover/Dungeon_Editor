@@ -99,6 +99,58 @@ namespace Dungeon.Models
             }
         }
 
+        public static PC Find(int id)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT * FROM pcs WHERE id = (@searchId);";
+
+            MySqlParameter searchId = new MySqlParameter();
+            searchId.ParameterName = "@searchId";
+            searchId.Value = id;
+            cmd.Parameters.Add(searchId);
+
+            var rdr = cmd.ExecuteReader() as MySqlDataReader;
+            int pcId = 0;
+            string pcName = "";
+
+            while(rdr.Read())
+            {
+              pcId = rdr.GetInt32(0);
+              pcName = rdr.GetString(1);
+            }
+
+            PC newPC = new PC(pcName, pcId);
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+
+            return newPC;
+        }
+
+        public void Delete()
+        {
+            // Delete PC entirely
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+
+            MySqlCommand cmd = new MySqlCommand("DELETE FROM pcs WHERE id = @PCId; DELETE FROM inventory WHERE pc_id = @PCId;", conn);
+            MySqlParameter pcIdParameter = new MySqlParameter();
+            pcIdParameter.ParameterName = "@PCId";
+            pcIdParameter.Value = this.GetId();
+
+            cmd.Parameters.Add(pcIdParameter);
+            cmd.ExecuteNonQuery();
+
+            if (conn != null)
+            {
+                conn.Close();
+            }
+        }
+
         public static void DeleteAll()
         {
             MySqlConnection conn = DB.Connection();
