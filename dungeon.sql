@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Feb 27, 2018 at 08:14 PM
+-- Generation Time: Feb 28, 2018 at 01:52 AM
 -- Server version: 5.6.35
 -- PHP Version: 7.0.15
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `dungeon`
 --
-CREATE DATABASE IF NOT EXISTS `dungeon` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `dungeon`;
 
 -- --------------------------------------------------------
 
@@ -31,8 +29,6 @@ USE `dungeon`;
 CREATE TABLE `contents` (
   `id` int(11) NOT NULL,
   `rooms` int(11) NOT NULL,
-  `npcs` int(11) NOT NULL,
-  `pcs` int(11) NOT NULL,
   `items` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
