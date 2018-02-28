@@ -6,12 +6,12 @@ using Dungeon.Models;
 
 namespace Dungeon.Controllers
 {
-  public class HomeController : Controller
+  public class ItemController : Controller
   {
-      [HttpGet("/")]
+      [HttpGet("/items")]
       public ActionResult Index()
       {
-        return View("Index");
+        return View("ItemIndex");
       }
 
   }

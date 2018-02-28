@@ -56,5 +56,24 @@ namespace Dungeon.Tests
       CollectionAssert.AreEqual(testList, result);
     }
 
+    [TestMethod]
+    public void Test_Update_UpdateChangesItemName()
+    {
+        //Arrange
+        Item testItem1 = new Item("Torch");
+        testItem1.Save();
+
+        Item testItem2 = new Item("Torch");
+        testItem2.Save();
+
+        //Act
+        testItem1.Update("Burnt Torch");
+
+        //Assert
+        Assert.AreNotEqual(testItem1.GetName(), testItem2.GetName());
+
+    }
+
+
   }
 }

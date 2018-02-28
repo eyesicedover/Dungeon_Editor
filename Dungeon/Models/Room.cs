@@ -60,8 +60,8 @@ namespace Dungeon.Models
             while(rdr.Read())
             {
               int roomId = rdr.GetInt32(0);
-              string roomDescription = rdr.GetString(1);
-              Room newRoom = new Room(roomDescription, roomId);
+              string roomName = rdr.GetString(1);
+              Room newRoom = new Room(roomName, roomId);
               allRooms.Add(newRoom);
             }
             conn.Close();
@@ -89,6 +89,32 @@ namespace Dungeon.Models
 
             cmd.ExecuteNonQuery();
             _id = (int) cmd.LastInsertedId;
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        }
+
+        public void Update(string newName)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"UPDATE rooms SET name = @newName WHERE id = @searchId;";
+
+            MySqlParameter searchId = new MySqlParameter();
+            searchId.ParameterName = "@searchId";
+            searchId.Value = _id;
+            cmd.Parameters.Add(searchId);
+
+            MySqlParameter name = new MySqlParameter();
+            name.ParameterName = "@newName";
+            name.Value = newName;
+            cmd.Parameters.Add(name);
+
+            cmd.ExecuteNonQuery();
+            _name = newName;
             conn.Close();
             if (conn != null)
             {

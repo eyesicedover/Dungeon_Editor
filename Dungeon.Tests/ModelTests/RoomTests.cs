@@ -112,7 +112,23 @@ namespace Dungeon.Tests
             CollectionAssert.AreEqual(testList, result);
         }
 
+        [TestMethod]
+        public void Test_Update_UpdateChangesRoomName()
+        {
+            //Arrange
+            Room testRoom1 = new Room("Entryway");
+            testRoom1.Save();
 
+            Room testRoom2 = new Room("Entryway");
+            testRoom2.Save();
+
+            //Act
+            testRoom1.Update("Foyer");
+
+            //Assert
+            Assert.AreNotEqual(testRoom1.GetName(), testRoom2.GetName());
+
+        }
 
     }
 }

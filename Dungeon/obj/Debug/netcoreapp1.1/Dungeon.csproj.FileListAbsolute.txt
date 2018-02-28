@@ -6,3 +6,11 @@
 /Users/Guest/Desktop/Dungeon.Solutions/Dungeon/bin/Debug/netcoreapp1.1/Dungeon.pdb
 /Users/Guest/Desktop/Dungeon.Solutions/Dungeon/obj/Debug/netcoreapp1.1/Dungeon.dll
 /Users/Guest/Desktop/Dungeon.Solutions/Dungeon/obj/Debug/netcoreapp1.1/Dungeon.pdb
+/Users/Guest/Desktop/Dungeon/Dungeon/bin/Debug/netcoreapp1.1/Dungeon.deps.json
+/Users/Guest/Desktop/Dungeon/Dungeon/bin/Debug/netcoreapp1.1/Dungeon.runtimeconfig.json
+/Users/Guest/Desktop/Dungeon/Dungeon/bin/Debug/netcoreapp1.1/Dungeon.runtimeconfig.dev.json
+/Users/Guest/Desktop/Dungeon/Dungeon/bin/Debug/netcoreapp1.1/Dungeon.dll
+/Users/Guest/Desktop/Dungeon/Dungeon/bin/Debug/netcoreapp1.1/Dungeon.pdb
+/Users/Guest/Desktop/Dungeon/Dungeon/obj/Debug/netcoreapp1.1/Dungeon.AssemblyInfo.cs
+/Users/Guest/Desktop/Dungeon/Dungeon/obj/Debug/netcoreapp1.1/Dungeon.dll
+/Users/Guest/Desktop/Dungeon/Dungeon/obj/Debug/netcoreapp1.1/Dungeon.pdb

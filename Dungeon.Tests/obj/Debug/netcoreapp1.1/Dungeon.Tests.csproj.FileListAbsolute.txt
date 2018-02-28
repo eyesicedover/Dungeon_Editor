@@ -11,3 +11,16 @@
 /Users/Guest/Desktop/Dungeon.Solutions/Dungeon.Tests/bin/Debug/netcoreapp1.1/Dungeon.pdb
 /Users/Guest/Desktop/Dungeon.Solutions/Dungeon.Tests/obj/Debug/netcoreapp1.1/Dungeon.Tests.dll
 /Users/Guest/Desktop/Dungeon.Solutions/Dungeon.Tests/obj/Debug/netcoreapp1.1/Dungeon.Tests.pdb
+/Users/Guest/Desktop/Dungeon/Dungeon.Tests/bin/Debug/netcoreapp1.1/Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+/Users/Guest/Desktop/Dungeon/Dungeon.Tests/bin/Debug/netcoreapp1.1/Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+/Users/Guest/Desktop/Dungeon/Dungeon.Tests/bin/Debug/netcoreapp1.1/Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+/Users/Guest/Desktop/Dungeon/Dungeon.Tests/bin/Debug/netcoreapp1.1/Dungeon.Tests.deps.json
+/Users/Guest/Desktop/Dungeon/Dungeon.Tests/bin/Debug/netcoreapp1.1/Dungeon.Tests.runtimeconfig.json
+/Users/Guest/Desktop/Dungeon/Dungeon.Tests/bin/Debug/netcoreapp1.1/Dungeon.Tests.runtimeconfig.dev.json
+/Users/Guest/Desktop/Dungeon/Dungeon.Tests/bin/Debug/netcoreapp1.1/Dungeon.Tests.dll
+/Users/Guest/Desktop/Dungeon/Dungeon.Tests/bin/Debug/netcoreapp1.1/Dungeon.Tests.pdb
+/Users/Guest/Desktop/Dungeon/Dungeon.Tests/bin/Debug/netcoreapp1.1/Dungeon.dll
+/Users/Guest/Desktop/Dungeon/Dungeon.Tests/bin/Debug/netcoreapp1.1/Dungeon.pdb
+/Users/Guest/Desktop/Dungeon/Dungeon.Tests/obj/Debug/netcoreapp1.1/Dungeon.Tests.AssemblyInfo.cs
+/Users/Guest/Desktop/Dungeon/Dungeon.Tests/obj/Debug/netcoreapp1.1/Dungeon.Tests.dll
+/Users/Guest/Desktop/Dungeon/Dungeon.Tests/obj/Debug/netcoreapp1.1/Dungeon.Tests.pdb

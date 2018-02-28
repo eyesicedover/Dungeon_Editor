@@ -110,5 +110,23 @@ namespace Dungeon.Tests
         CollectionAssert.AreEqual(testList, result);
     }
 
+    [TestMethod]
+    public void Test_Update_UpdateChangesNPCName()
+    {
+        //Arrange
+        NPC testNPC1 = new NPC("Jim Orc");
+        testNPC1.Save();
+
+        NPC testNPC2 = new NPC("Jim Orc");
+        testNPC2.Save();
+
+        //Act
+        testNPC1.Update("James Orc");
+
+        //Assert
+        Assert.AreNotEqual(testNPC1.GetName(), testNPC2.GetName());
+
+    }
+
   }
 }

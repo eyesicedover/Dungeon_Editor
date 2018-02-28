@@ -111,5 +111,24 @@ namespace Dungeon.Tests
         CollectionAssert.AreEqual(testList, result);
     }
 
+    [TestMethod]
+    public void Test_Update_UpdateChangesPCName()
+    {
+        //Arrange
+        PC testPC1 = new PC("Fred");
+        testPC1.Save();
+
+        PC testPC2 = new PC("Fred");
+        testPC2.Save();
+
+        //Act
+        testPC1.Update("Derf");
+
+        //Assert
+        Assert.AreNotEqual(testPC1.GetName(), testPC2.GetName());
+
+    }
+
+
   }
 }

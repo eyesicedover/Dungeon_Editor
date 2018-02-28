@@ -1,0 +1,17 @@
+@{
+  Layout = "_Layout";
+}
+<div class="container text-center">
+  <h1>Room Editor</h1>
+  <div>
+    <form class="form-group" action="index.html" method="post">
+      <input type="text" name="newRoomName" value="" placeholder="Enter room name">
+      <button type="submit" name="button">Add new room</button>
+    </form>
+
+  </div>
+
+  @{
+    Html.RenderPartial("_FooterNavigation");
+  }
+</div>
