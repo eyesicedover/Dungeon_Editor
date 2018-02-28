@@ -55,5 +55,60 @@ namespace Dungeon.Tests
       CollectionAssert.AreEqual(testList, result);
     }
 
+    [TestMethod]
+    public void Save_AssignsIdToObject_id()
+    {
+      //Arrange
+      NPC testNPC = new NPC("Orc");
+      testNPC.Save();
+
+      //Act
+      NPC savedNPC = NPC.GetAll()[0];
+
+      int result = savedNPC.GetId();
+      int testId = testNPC.GetId();
+
+      //Assert
+      Assert.AreEqual(testId, result);
+    }
+
+    [TestMethod]
+    public void Find_FindsNPCInDatabase_NPC()
+    {
+      //Arrange
+      NPC testNPC = new NPC("Orc");
+      testNPC.Save();
+
+      //Act
+      NPC result = NPC.Find(testNPC.GetId());
+
+      //Assert
+      Assert.AreEqual(testNPC, result);
+    }
+
+    [TestMethod]
+    public void Test_Add_AddsItemToInventory()
+    {
+        //Arrange
+        NPC testNPC = new NPC("Orc");
+        testNPC.Save();
+
+        Item testItem = new Item("Sword");
+        testItem.Save();
+
+        Item testItem2 = new Item("Torch");
+        testItem2.Save();
+
+        //Act
+        testNPC.AddItemToNPC(testItem);
+        testNPC.AddItemToNPC(testItem2);
+
+        List<Item> result = testNPC.GetItems();
+        List<Item> testList = new List<Item>{testItem, testItem2};
+
+        //Assert
+        CollectionAssert.AreEqual(testList, result);
+    }
+
   }
 }

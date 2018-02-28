@@ -181,10 +181,6 @@ namespace Dungeon.Models
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-            // cmd.CommandText = @"SELECT items.* FROM rooms
-            //   JOIN contents ON (categories.id = categories_items.category_id)
-            //   JOIN items ON (categories_items.item_id = items.id)
-            //   WHERE categories.id = @CategoryId;";
             cmd.CommandText = @"SELECT items.* FROM rooms
               JOIN contents ON (rooms.id = contents.rooms)
               JOIN items ON (contents.items = items.id)

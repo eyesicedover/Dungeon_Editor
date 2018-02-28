@@ -56,5 +56,60 @@ namespace Dungeon.Tests
       CollectionAssert.AreEqual(testList, result);
     }
 
+    [TestMethod]
+    public void Save_AssignsIdToObject_id()
+    {
+      //Arrange
+      PC testPC = new PC("Crom");
+      testPC.Save();
+
+      //Act
+      PC savedPC = PC.GetAll()[0];
+
+      int result = savedPC.GetId();
+      int testId = testPC.GetId();
+
+      //Assert
+      Assert.AreEqual(testId, result);
+    }
+
+    [TestMethod]
+    public void Find_FindsPCInDatabase_PC()
+    {
+      //Arrange
+      PC testPC = new PC("Crom");
+      testPC.Save();
+
+      //Act
+      PC result = PC.Find(testPC.GetId());
+
+      //Assert
+      Assert.AreEqual(testPC, result);
+    }
+
+    [TestMethod]
+    public void Test_Add_AddsItemToInventory()
+    {
+        //Arrange
+        PC testPC = new PC("Crom");
+        testPC.Save();
+
+        Item testItem = new Item("Sword");
+        testItem.Save();
+
+        Item testItem2 = new Item("Torch");
+        testItem2.Save();
+
+        //Act
+        testPC.AddItemToPC(testItem);
+        testPC.AddItemToPC(testItem2);
+
+        List<Item> result = testPC.GetItems();
+        List<Item> testList = new List<Item>{testItem, testItem2};
+
+        //Assert
+        CollectionAssert.AreEqual(testList, result);
+    }
+
   }
 }

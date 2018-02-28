@@ -165,5 +165,63 @@ namespace Dungeon.Models
             }
         }
 
+        public void AddItemToPC(Item newItem)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"INSERT INTO inventory (pcs, items) VALUES (@PCId, @ItemId);";
+
+            MySqlParameter pcs = new MySqlParameter();
+            pcs.ParameterName = "@PCId";
+            pcs.Value = _id;
+            cmd.Parameters.Add(pcs);
+
+            MySqlParameter items = new MySqlParameter();
+            items.ParameterName = "@ItemId";
+            items.Value = newItem.GetId();
+            cmd.Parameters.Add(items);
+
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        }
+
+        public List<Item> GetItems()
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT items.* FROM pcs
+              JOIN inventory ON (pcs.id = inventory.pcs)
+              JOIN items ON (inventory.items = items.id)
+              WHERE pcs.id = @PCId;";
+
+            MySqlParameter pcIdParameter = new MySqlParameter();
+            pcIdParameter.ParameterName = "@PCId";
+            pcIdParameter.Value = _id;
+            cmd.Parameters.Add(pcIdParameter);
+
+            MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+            List<Item> items = new List<Item>{};
+
+            while(rdr.Read())
+            {
+                int itemId = rdr.GetInt32(0);
+                string itemName = rdr.GetString(1);
+                Item newItem = new Item(itemName, itemId);
+                items.Add(newItem);
+            }
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        return items;
+        }
+
     }
 }
