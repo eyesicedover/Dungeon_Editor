@@ -35,19 +35,7 @@ namespace Dungeon.Controllers
       [HttpPost("/pcs/update/{id}")]
       public ActionResult Details(int id)
       {
-        // PC TempPC = PC.Find(id);
-        //
-        // temp_Name = TempPC.GetName();
-        // temp_Type = TempPC.GetType();
-        // temp_HP = TempPC.GetHP();
-        // temp_AC = TempPC.GetAC();
-        // temp_Damage = TempPC.GetDamage();
-        // temp_Lvl = TempPC.GetLVL();
-        // temp_Exp = TempPC.GetEXP();
-        // temp_RoomId = TempPC.GetRoomId();
-        // // _id = id;
-        PC thisPC = PC.Find(id);
-
+        PC thisPC = PC.Find(id)
         string temp_Name = Request.Form["updatedPCName"];
         string temp_Type = Request.Form["updatedPCType"];
         int temp_HP = Int32.Parse(Request.Form["updatedPCHP"]);
