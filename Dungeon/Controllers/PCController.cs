@@ -35,7 +35,7 @@ namespace Dungeon.Controllers
       [HttpPost("/pcs/update/{id}")]
       public ActionResult Details(int id)
       {
-        PC thisPC = PC.Find(id)
+        PC thisPC = PC.Find(id);
         string temp_Name = Request.Form["updatedPCName"];
         string temp_Type = Request.Form["updatedPCType"];
         int temp_HP = Int32.Parse(Request.Form["updatedPCHP"]);

@@ -36,8 +36,17 @@ namespace Dungeon.Controllers
       public ActionResult Details(int id)
       {
         NPC thisNPC = NPC.Find(id);
-        thisNPC.Update(Request.Form["updatedNPCName"]);
-        return View("NPCDetails", thisNPC);
+        string temp_Name = Request.Form["updatedNPCName"];
+        string temp_Type = Request.Form["updatedNPCType"];
+        int temp_HP = Int32.Parse(Request.Form["updatedNPCHP"]);
+        int temp_AC = Int32.Parse(Request.Form["updatedNPCAC"]);
+        int temp_Damage = Int32.Parse(Request.Form["updatedNPCDamage"]);
+        int temp_LVL = Int32.Parse(Request.Form["updatedNPCLVL"]);
+        int temp_RoomId = Int32.Parse(Request.Form["updatedRoomId"]);
+        thisNPC.Update(temp_Name, temp_Type, temp_HP, temp_AC, temp_Damage, temp_LVL, temp_RoomId);
+
+        NPC thisUpdatedNPC = NPC.Find(id);
+        return View("NPCDetails", thisUpdatedNPC);
       }
   }
 }

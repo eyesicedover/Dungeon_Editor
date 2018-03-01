@@ -54,7 +54,7 @@ namespace Dungeon.Models
             return _name;
         }
 
-        public string GetType()
+        public string GetNPCType()
         {
           return _type;
         }
@@ -107,11 +107,11 @@ namespace Dungeon.Models
               int npcId = rdr.GetInt32(0);
               string npcName = rdr.GetString(1);
               string npcType = rdr.GetString(2);
-              string npcHP = rdr.GetString(3);
-              string npcAC = rdr.GetString(4);
-              string npcDamage = rdr.GetString(5);
-              string npcLVL = rdr.GetString(6);
-              string npcRoomId = rdr.GetString(7);
+              int npcHP = rdr.GetInt32(3);
+              int npcAC = rdr.GetInt32(4);
+              int npcDamage = rdr.GetInt32(5);
+              int npcLVL = rdr.GetInt32(6);
+              int npcRoomId = rdr.GetInt32(7);
 
               NPC newNPC = new NPC(npcName, npcType, npcHP, npcHP, npcDamage, npcLVL, npcRoomId, npcId);
               allNPCs.Add(newNPC);

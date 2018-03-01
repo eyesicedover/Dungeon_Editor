@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Feb 28, 2018 at 01:52 AM
+-- Generation Time: Mar 01, 2018 at 03:34 AM
 -- Server version: 5.6.35
 -- PHP Version: 7.0.15
 
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `dungeon`
 --
+CREATE DATABASE IF NOT EXISTS `dungeon` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `dungeon`;
 
 -- --------------------------------------------------------
 
@@ -58,6 +60,13 @@ CREATE TABLE `items` (
   `magic` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `items`
+--
+
+INSERT INTO `items` (`id`, `name`, `type`, `special`, `magic`) VALUES
+(1, 'Nasty Sword', '', '', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -83,8 +92,16 @@ CREATE TABLE `npcs` (
   `hp` int(11) NOT NULL,
   `ac` int(11) NOT NULL,
   `damage` int(11) NOT NULL,
-  `lvl` int(11) NOT NULL
+  `lvl` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `npcs`
+--
+
+INSERT INTO `npcs` (`id`, `name`, `type`, `hp`, `ac`, `damage`, `lvl`, `room_id`) VALUES
+(1, 'Jem Orc', '', 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -100,8 +117,19 @@ CREATE TABLE `pcs` (
   `ac` int(11) NOT NULL,
   `damage` int(11) NOT NULL,
   `lvl` int(11) NOT NULL,
-  `exp` int(11) NOT NULL
+  `exp` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `pcs`
+--
+
+INSERT INTO `pcs` (`id`, `name`, `type`, `hp`, `ac`, `damage`, `lvl`, `exp`, `room_id`) VALUES
+(1, 'Not Empty', 'Dragon Librarian\'s Butt', 0, 333, 2, 1, 0, 2),
+(2, 'Blah the Habit-forming Tree', 'no', 44, 10, 500, 22, 0, 43),
+(3, 'James Orcus', 'Package Sniffer', 4, 0, 3, 2, 0, 5),
+(4, 'Joe ', 'Ninja', 44, 222, 33, 63, 350, 33);
 
 -- --------------------------------------------------------
 
@@ -117,6 +145,14 @@ CREATE TABLE `rooms` (
   `light` tinyint(1) NOT NULL,
   `commands` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `rooms`
+--
+
+INSERT INTO `rooms` (`id`, `name`, `short_description`, `full_description`, `light`, `commands`) VALUES
+(1, 'Foyer', 'An entryway into the dungeon.', 'A dank, smelly entryway. It leads into a long, dark corridor that seems to slope downwards. Cobwebs reach for you from the ceiling.', 0, 'Search, Look, Describe, Use'),
+(4, 'lil Meat Locker', '', '', 0, '');
 
 --
 -- Indexes for dumped tables
@@ -150,7 +186,9 @@ ALTER TABLE `loot`
 -- Indexes for table `npcs`
 --
 ALTER TABLE `npcs`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `room_id` (`room_id`),
+  ADD UNIQUE KEY `room_id_2` (`room_id`);
 
 --
 -- Indexes for table `pcs`
@@ -182,7 +220,7 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `loot`
 --
@@ -192,17 +230,17 @@ ALTER TABLE `loot`
 -- AUTO_INCREMENT for table `npcs`
 --
 ALTER TABLE `npcs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `pcs`
 --
 ALTER TABLE `pcs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
