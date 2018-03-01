@@ -4,14 +4,26 @@
 <div class="container text-center">
   <h1>PC Editor</h1>
   <div>
-    <form class="form-group" action="index.html" method="post">
-      <input type="text" name="newPCName" value="" placeholder="Enter PC name">
-      <button type="submit" name="button">Add new PC</button>
+    <form class="form-group" action="/pcs/details/{id}" method="post">
+      <select class="form-control" name="id" id="id">
+      <option value="0">Empty</option>
+      @{
+        if (@Model.Count > 0)
+        {
+          foreach (var pc in @Model)
+          {
+            <option value="@pc.GetId()">@pc.GetName()</option>
+          }
+        }
+      }
+      </select>
+      <button type="submit" class="btn btn-danger">View PC</button>
     </form>
-
   </div>
-
-  @{
-    Html.RenderPartial("_FooterNavigation");
-  }
+  <div>
+    <form class="form-group" action="/pcs" method="post">
+      <input type="text" name="newPCName" value="" placeholder="Enter PC name">
+      <button type="submit" class="btn btn-danger">Add PC</button>
+    </form>
+  </div>
 </div>

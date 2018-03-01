@@ -10,6 +10,12 @@ namespace Dungeon.Models
     public class NPC
     {
         private string _name;
+        // private string _type;
+        // private int _hp;
+        // private int _ac;
+        // private int _damage;
+        // private int _lvl;
+        // private int _roomId;
         private int _id;
 
         public NPC(string name, int id = 0)
@@ -41,6 +47,36 @@ namespace Dungeon.Models
         {
             return _name;
         }
+
+        // public string GetType()
+        // {
+        //   return _type;
+        // }
+        //
+        // public int GetHP()
+        // {
+        //     return _hp;
+        // }
+        //
+        // public int GetAC()
+        // {
+        //     return _ac;
+        // }
+        //
+        // public int GetDamage()
+        // {
+        //     return _damage;
+        // }
+        //
+        // public int GetLVL()
+        // {
+        //     return _lvl;
+        // }
+        //
+        // public int GetRoomId()
+        // {
+        //     return _roomId;
+        // }
 
         public int GetId()
         {

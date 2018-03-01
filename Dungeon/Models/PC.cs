@@ -10,11 +10,25 @@ namespace Dungeon.Models
     public class PC
     {
         private string _name;
+        private string _type;
+        private int _hp;
+        private int _ac;
+        private int _damage;
+        private int _lvl;
+        private int _exp;
+        private int _roomId;
         private int _id;
 
-        public PC(string Name, int id = 0)
+        public PC(string Name, string Type = "Type", int HP = 0, int AC = 0, int Damage = 0, int LVL = 0, int EXP = 0, int RoomId = 0, int id = 0)
         {
             _name = Name;
+            _type = Type;
+            _hp = HP;
+            _ac = AC;
+            _damage = Damage;
+            _lvl = LVL;
+            _exp = EXP;
+            _roomId = RoomId;
             _id = id;
         }
 
@@ -42,6 +56,41 @@ namespace Dungeon.Models
             return _name;
         }
 
+        public string GetPCType()
+        {
+          return _type;
+        }
+
+        public int GetHP()
+        {
+            return _hp;
+        }
+
+        public int GetAC()
+        {
+            return _ac;
+        }
+
+        public int GetDamage()
+        {
+            return _damage;
+        }
+
+        public int GetLVL()
+        {
+            return _lvl;
+        }
+
+        public int GetEXP()
+        {
+            return _exp;
+        }
+
+        public int GetRoomId()
+        {
+            return _roomId;
+        }
+
         public int GetId()
         {
             return _id;
@@ -63,8 +112,15 @@ namespace Dungeon.Models
             while(rdr.Read())
             {
               int pcId = rdr.GetInt32(0);
-              string pcDescription = rdr.GetString(1);
-              PC newPC = new PC(pcDescription, pcId);
+              string pcName = rdr.GetString(1);
+              string pcType = rdr.GetString(2);
+              int pcHP = rdr.GetInt32(3);
+              int pcAC = rdr.GetInt32(4);
+              int pcDamage = rdr.GetInt32(5);
+              int pcLVL = rdr.GetInt32(6);
+              int pcEXP = rdr.GetInt32(7);
+              int pcRoomId = rdr.GetInt32(8);
+              PC newPC = new PC(pcName, pcType, pcHP, pcAC, pcDamage, pcLVL, pcEXP, pcRoomId, pcId);
               allPCs.Add(newPC);
             }
             conn.Close();
@@ -99,22 +155,70 @@ namespace Dungeon.Models
             }
         }
 
-        public void Update(string newName)
+        public void Update(string newName, string newType, int newHP, int newAC, int newDamage, int newLVL, int newEXP, int newRoomId)
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"UPDATE pcs SET name = @newName WHERE id = @searchId;";
+            cmd.CommandText = @"UPDATE pcs SET name = @newName, type = @newType,
+            hp = @newHP, ac = @newAC,
+            damage = @newDamage, lvl = @newLVL,
+            exp = @newEXP, room_id = @newRoomId
+             WHERE id = @searchId; ";
 
+            //search id
             MySqlParameter searchId = new MySqlParameter();
             searchId.ParameterName = "@searchId";
             searchId.Value = _id;
             cmd.Parameters.Add(searchId);
 
+            //name
             MySqlParameter name = new MySqlParameter();
             name.ParameterName = "@newName";
             name.Value = newName;
             cmd.Parameters.Add(name);
+
+            //type
+            MySqlParameter type = new MySqlParameter();
+            type.ParameterName = "@newType";
+            type.Value = newType;
+            cmd.Parameters.Add(type);
+
+            //hp
+            MySqlParameter hp = new MySqlParameter();
+            hp.ParameterName = "@newHP";
+            hp.Value = newHP;
+            cmd.Parameters.Add(hp);
+
+            //ac
+            MySqlParameter ac = new MySqlParameter();
+            ac.ParameterName = "@newAC";
+            ac.Value = newAC;
+            cmd.Parameters.Add(ac);
+
+            //damage
+            MySqlParameter damage = new MySqlParameter();
+            damage.ParameterName = "@newDamage";
+            damage.Value = newDamage;
+            cmd.Parameters.Add(damage);
+
+            //lvl
+            MySqlParameter lvl = new MySqlParameter();
+            lvl.ParameterName = "@newLVL";
+            lvl.Value = newLVL;
+            cmd.Parameters.Add(lvl);
+
+            //exp
+            MySqlParameter exp = new MySqlParameter();
+            exp.ParameterName = "@newEXP";
+            exp.Value = newEXP;
+            cmd.Parameters.Add(exp);
+
+            //room id
+            MySqlParameter roomId = new MySqlParameter();
+            roomId.ParameterName = "@newRoomId";
+            roomId.Value = newRoomId;
+            cmd.Parameters.Add(roomId);
 
             cmd.ExecuteNonQuery();
             _name = newName;
@@ -140,14 +244,28 @@ namespace Dungeon.Models
             var rdr = cmd.ExecuteReader() as MySqlDataReader;
             int pcId = 0;
             string pcName = "";
+            string pcType = "";
+            int pcHP = 0;
+            int pcAC = 0;
+            int pcDamage = 0;
+            int pcLVL = 0;
+            int pcEXP = 0;
+            int pcRoomId = 0;
 
             while(rdr.Read())
             {
               pcId = rdr.GetInt32(0);
               pcName = rdr.GetString(1);
+              pcType = rdr.GetString(2);
+              pcHP = rdr.GetInt32(3);
+              pcAC = rdr.GetInt32(4);
+              pcDamage = rdr.GetInt32(5);
+              pcLVL = rdr.GetInt32(6);
+              pcEXP = rdr.GetInt32(7);
+              pcRoomId = rdr.GetInt32(8);
             }
 
-            PC newPC = new PC(pcName, pcId);
+            PC newPC = new PC(pcName, pcType, pcHP, pcAC, pcDamage, pcLVL, pcEXP, pcRoomId, pcId);
             conn.Close();
             if (conn != null)
             {

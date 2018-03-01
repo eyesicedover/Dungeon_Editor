@@ -11,6 +11,10 @@ namespace Dungeon.Models
     public class Room
     {
         private string _name;
+        // private string _shortDescription;
+        // private string _fullDescription;
+        // private bool _light;
+        // private string _commands;
         private int _id;
         // We no longer declare _RoomId here
 

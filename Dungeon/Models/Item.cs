@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
-// using MySQLCore.Models;
 using System;
 using Dungeon.Models;
 using Dungeon;
@@ -10,6 +9,9 @@ namespace Dungeon.Models
     public class Item
     {
         private string _name;
+        // private string _type;
+        // private string _special;
+        // private bool _magic;
         private int _id;
 
         public Item(string name, int id = 0)
@@ -42,6 +44,21 @@ namespace Dungeon.Models
         {
             return _name;
         }
+
+        // public string GetType()
+        // {
+        //     return _type;
+        // }
+        //
+        // public string GetSpecial()
+        // {
+        //     return _special;
+        // }
+        //
+        // public bool GetMagic()
+        // {
+        //     return _magic;
+        // }
 
         public int GetId()
         {

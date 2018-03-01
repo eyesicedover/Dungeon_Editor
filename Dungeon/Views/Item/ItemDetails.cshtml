@@ -1,0 +1,13 @@
+@{
+  Layout = "_Layout";
+}
+<div class="container text-center">
+  <h1>Item Details</h1>
+  <h3>Item: @Model.GetName()</h3>
+
+
+  <form class="form-group" action="/items/update/@Model.GetId()" method="post">
+    <input type="text" name="updatedItemName" value="" placeholder="@Model.GetName()">
+    <button type="submit" class="btn btn-danger">Update Item</button>
+  </form>
+</div>
